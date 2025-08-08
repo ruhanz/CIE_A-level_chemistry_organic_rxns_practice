@@ -134,6 +134,9 @@ unsure_arr = []
 import random
 
 try:
+    print('column_names:')
+    for i in range(6):
+        print(i, column_names[i])
     cols_print = list(map(int, input('enter cols to show, separated by "," OR "rand": ').split(',')))
     cols_input = [x for x in range(0, 6) if x not in cols_print]
     rand = False
@@ -173,3 +176,4 @@ def test():
             input('congrats')
     new_rxn()
 test()
+
