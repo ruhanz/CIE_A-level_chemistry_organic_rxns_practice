@@ -1,5 +1,6 @@
-# import pandas as pd
-# import numpy as np
+import random
+import pandas as pd
+import numpy as np
 #
 # arr = np.array([
 #     ['cracking','alkane','','alkane','','heat, Al2O3 catalyst'],
@@ -25,11 +26,12 @@
 # ])
 column_names = {
     0:'type: ',
-    1: 'organic reagent: ',
-    2: 'inorganic reagent: ',
-    3: 'organic product: ',
-    4: 'inorganic product: ',
-    5: 'conditions: '
+    1: 'mechanism',
+    2: 'organic reagent: ',
+    3: 'inorganic reagent: ',
+    4: 'organic product: ',
+    5: 'inorganic product: ',
+    6: 'conditions: '
 }
 #
 # df = pd.DataFrame(arr,[i for i in range(len(arr))],[column_names[j] for j in range(6)])
@@ -99,7 +101,7 @@ column_names = {
 #     print(f'\t {i},')
 # print(']')
 
-arr = [
+arr1 = [
     ['AE', 'alkene', 'H2(g)', 'alkane', '', 'Pt/Ni catalyst, heat'],
     ['AE', 'alkene', 'H2O(g)', 'alcohol', '', 'H3PO4 catalyst'],
     ['AE', 'alkene', 'HX(g)', 'Xoalkane', '', 'room temp'],
@@ -129,26 +131,78 @@ arr = [
     ['hydrolysis', 'nitrile', 'H2O', 'carboxylic acid', 'ammonium salt', 'dilute acid, heat'],
     ['hydrolysis', 'nitrile', 'alkali', 'carboxylate salt', 'NH3', 'dilute alkali, heat'],
 ]
+
+arr2 = [
+    ['SE','SE','benzene', 'Cl2/Br2','Xobenzene','HX','cat AlX3',],
+    ['SE','SE','methylbenzene', 'Cl2/Br2','2/4-Xomethylbenzene','HX','cat AlX3',],
+    ['nitration','SE','benzene','HNO3','nitrobenzene','H2O','conc HNO3, conc H2SO4, temp 25C~60C'],
+    ['nitration','SE','methylbenzene','HNO3','2/4-nitromethylbenzene','H2O','conc HNO3, conc H2SO4, temp 25C~60C'],
+    ['Friedel-Crafts alkylation','SE','benzene','CH3Cl','methylbenzene','HCl','cat AlCl3, heat'],
+    ['Friedel-Crafts acylation','SE','benzene','ethanoyl chloride','phenylethanone','HCl','cat AlCl3, heat'],
+    ['complete oxidation','','methylbenzene','','benzoic acid','H2O','hot alkaline KMnO4; followed by dilute acid'],
+    ['hydrogenation','AE','benzene','H2','cyclohexane','','cat Pt/Ni, heat'],
+    ['esterification','AE','alcohol','acyl chloride','ester','HCl',''],
+    ['diazotisation','','phenylamine','acid, HNO2/NaNO2','diazonium salt (e.g. benzenediazonium chloride)','H2O', 'dilute acid, temp <10C'],
+    ['thermal decomposition','','diazonium salt','H2O','phenol','N2, H+','warming'],
+    ['acid-base','','phenol','NaOH(aq)','sodium phenoxide','H2O',''],
+    ['','','phenol','Na(s)','sodium phenoxide','H2(g)',''],
+    ['','','phenol','diazonium salt','azo compound (4-hydroxyphenylazobenzene)','H+','in NaOH(aq)'],
+    ['nitration','','phenol','HNO3(aq)','2/4-nitrophenol','H2O','dilute HNO3(aq), room temp'],
+    ['bromination','','phenol','Br2(aq)','2,4,6-tribromophenol','HBr',''],
+    ['S','','carboxylic acid','PCl3','acyl chloride','H3PO3','heat'],
+    ['S','','carboxylic acid','PCl5','acyl chloride','POCl3, HCl',''],
+    ['S','','carboxylic acid','SOCl2','acyl chloride','SO2, HCl',''],
+    ['oxidation','','methanoic acid','','','CO2, H2O',"Fehling's reagent; Tollen's reagent; acidified KMnO4; acidified K2C2O7"],
+    ['oxidation','','ethanedioic acid','','','CO2, H2O','warm acidified KMnO4'],
+    ['hydrolysis','AE','acyl chloride','H2O','carboxylic acid','HCl','room temp'],
+    ['esterification','AE','phenol','acyl chloride','ester','HCl','room temp'],
+    ['condensation','AE','acyl chloride','ammonia','amide','HCl','room temp'],
+    ['condensation','AE','acyl chloride','amine','amide','HCl','room temp'],
+    ['SN','SN', 'Xoalkane', 'NH3', 'primary amine', 'HX', 'ethanol, heat, under pressure'],
+    ['SN','SN', 'Xoalkane', 'primary amine', 'secondary amine', 'HX', 'ethanol, heat, under pressure/in a sealed tube'],
+    ['reduction','','amide','','amine','H2O','LiAlH4'],
+    ['reduction','','nitrile','','amine','','LiAlH4 OR H2/Ni'],
+    ['reduction','','nitrobenzene','','phenylamine','H2O','hot Sn, conc HCl; followed by NaOH(aq)'],
+    ['bromination','','phenylamine','Br2(aq)','2,4,6-tribromophenylamine','HBr','room temp'],
+    ['hydrolysis','','amide','H2O','carboxylic acid','amine','aq acid'],
+    ['hydrolysis','','amide','alkali','carboxylate salt','amine','aq alkali'],
+    ['condensation polymerisation','','dicarboxylic acid','diol','polyester','H2O',''],
+    ['condensation polymerisation','','dioyl chloride','diol','polyester','H2O',''],
+    ['condensation polymerisation','','hydroxycarboxylic acid','','polyester','H2O',''],
+    ['condensation polymerisation','','dicarboxylic acid','diamine','polyamide','H2O',''],
+    ['condensation polymerisation','','dioyl chloride','diamine','polyamide','H2O',''],
+    ['condensation polymerisation','','aminocarboxylic acid','','polyamide','H2O',''],
+    ['condensation polymerisation','','amino acid','','polyamide','H2O',''],
+
+]
+
+
+
+
 unsure_arr = []
+arr=arr2
 
-import random
+df = pd.DataFrame(arr2, columns=column_names.values())
+cols=list(column_names.values())
 
-try:
-    print('column_names:')
-    for i in range(6):
-        print(i, column_names[i])
-    cols_print = list(map(int, input('enter cols to show, separated by "," OR "rand": ').split(',')))
-    cols_input = [x for x in range(0, 6) if x not in cols_print]
-    rand = False
-    rand_cols = 0
-except ValueError:
-    cols_print = []
-    cols_input = []
-    rand = True
-    rand_cols = int(input('enter number of cols to show: '))
 
 
 def test():
+
+    try:
+        print('column_names:')
+        for i in range(6):
+            print(i, column_names[i])
+        cols_print = list(map(int, input('enter cols to show, separated by "," OR "rand": ').split(',')))
+        cols_input = [x for x in range(0, 6) if x not in cols_print]
+        rand = False
+        rand_cols = 0
+    except ValueError:
+        cols_print = []
+        cols_input = []
+        rand = True
+        rand_cols = int(input('enter number of cols to show: '))
+
     def new_rxn():
         global arr, unsure_arr, cols_print, cols_input, rand, rand_cols
         cur_rxn = random.choice(arr)
@@ -175,5 +229,15 @@ def test():
         else:
             input('congrats')
     new_rxn()
-test()
+
+def mindmap():
+    # if input('select from the following\n1: reagent to product\n2: product to reagent') == '1':
+    #     choice = 2,3
+    # else:
+    #     choice = 4,5
+    choice = 2,3
+    substance='acyl chloride'
+    print(df[(df[cols[choice[0]]]==substance)|(df[cols[choice[1]]]==substance)])
+
+mindmap()
 
