@@ -180,21 +180,36 @@ arr2 = [
 
 
 unsure_arr = []
-arr=arr2
+arr=None
+max_col=0
+rand = None
+rand_cols = None
+cols_input =None
+cols_print = None
 
 df = pd.DataFrame(arr2, columns=column_names.values())
 cols=list(column_names.values())
 
 
 
-def test():
+def change_level():
+    global max_col, arr
+    lvl=int(input('Select from the following numbers:\n0: AS\n1: A2 \n2: both\n'))
+    if lvl == 0:
+        arr=arr1
+        max_col=6
+    elif lvl == 1:
+        arr =arr2
+        max_col=7
 
+def test():
+    global rand, rand_cols, cols_input, cols_print
     try:
         print('column_names:')
-        for i in range(6):
+        for i in range(max_col):
             print(i, column_names[i])
         cols_print = list(map(int, input('enter cols to show, separated by "," OR "rand": ').split(',')))
-        cols_input = [x for x in range(0, 6) if x not in cols_print]
+        cols_input = [x for x in range(0, max_col) if x not in cols_print]
         rand = False
         rand_cols = 0
     except ValueError:
@@ -204,11 +219,11 @@ def test():
         rand_cols = int(input('enter number of cols to show: '))
 
     def new_rxn():
-        global arr, unsure_arr, cols_print, cols_input, rand, rand_cols
+        global arr, unsure_arr, cols_print, cols_input
         cur_rxn = random.choice(arr)
         if rand:
-            cols_print = random.sample(range(0, 6), rand_cols)
-            cols_input = [x for x in range(0, 6) if x not in cols_print]
+            cols_print = random.sample(range(0, max_col), rand_cols)
+            cols_input = [x for x in range(0, max_col) if x not in cols_print]
         for col in cols_print:
             print(f'{column_names[col]}{cur_rxn[col]}')
         input()
@@ -238,6 +253,8 @@ def mindmap():
     choice = 2,3
     substance='acyl chloride'
     print(df[(df[cols[choice[0]]]==substance)|(df[cols[choice[1]]]==substance)])
-
-mindmap()
-
+# pd.set_option('display.max_columns', None)
+# print(df.sort_values(by=cols[0], ascending=True))
+# print(df)
+change_level()
+test()
